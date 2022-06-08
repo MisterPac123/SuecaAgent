@@ -4,40 +4,40 @@ from Card import Card
 from Player import Player
 
 
-card_value =['A','K','Q','J','2','3','4','5','6','7']
-card_suit = ['Heart', 'Club', 'Diamond', "Spade"]
-
+card_value =['ACE','SEVEN','KING','QUEEN','JACK','TWO','THREE','FOUR','FIVE','SIX']
+card_suit = ['Heart', 'Club', 'Diamond', 'Spades']
 
 def setupSueca():
     players = initPlayers()
     deck = buildDeck()
     random.shuffle(deck)
-    distributeCards(players, deck)
+    gameTrump = distributeCards(players, deck)
     printPlayersHands(players)
-    return players
+    print("###  CURRENT TRUMP : ", gameTrump ,"###" )
+    return players, gameTrump
 
 
-def startGame(players):
+def startGame(players,trump):
     initialPlayer = random.choice(players)
     playerIndex = players.index(initialPlayer)
     nr_cards_played = 0  
-    currentSuit = 'none'
+    gameTrump = trump
     currentCards = []
 
     for turn in range (1, 11):
         print("#############################################\nCurrent turn:" + str(turn))
         nr_cards_played = 0
-        currentSuit = 'none'
+        currentSuit = ""
         currentPlayedCards = {}
 
         while nr_cards_played < 4:
 
-            currentPlayer = players[playerIndex]
+            currentPlayer = players[playerIndex]  # current player is "P'n'"
             card = playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards)
             
             currentPlayedCards[currentPlayer.getId()] = card
 
-            if currentSuit == 'none':
+            if currentSuit == "":
                 currentSuit = card.getSuit()
 
             nr_cards_played += 1
@@ -47,17 +47,18 @@ def startGame(players):
                 playerIndex = 0
 
             if nr_cards_played == 4 :
-                playerString = checkTurnWinner(currentPlayedCards, currentSuit)
-                print('Turn winner:' + playerString)
-                
-                #playerIndex = players.index(playerString)
+                winner,points = checkTurnWinner(currentPlayedCards, currentSuit,gameTrump)
+                print('Turn winner:' + winner + " \n" + "Round Points:" , points)
+                for p in players:
+                    if p.getId == winner:
+                        break
+                    continue
+                p.setPoints(points)
                 #TODO check who won the turn
                 #put that player as leaded
                 #sum points for the team
             
 
-
-   
 
 def initPlayers() :
     players = []
@@ -71,15 +72,21 @@ def initPlayers() :
     players.append(p4)
     return players
 
+def setTrump (suit):
+    gameTrump = suit
 
 def distributeCards(players, deck):
     for player in players:
+        # select trump suit
+        #
         hand = random.sample(deck, 10)
         player.setHand(hand)
         for card in hand:
             deck.remove(card)
+    return card.getSuit()    
 
 
+    
 def buildDeck():
     deck = []
     for suit in card_suit:
@@ -100,65 +107,88 @@ def printPlayersHands(players) :
         print(str)
 
 
-def getCardInput(currentplayer, turn, currentSuit, currentPlayedCards) :
-    while True:
-
-        if len(currentPlayedCards)>0:
-            print('\n###################\nCurrent played cards')
-            for keyCard in currentPlayedCards:
-                print(keyCard + '->' + currentPlayedCards[keyCard].getStringCard())
-            print('\n###################')
-
-        print('\nCurrent player:' + currentplayer.getId() + '\n')
-
-        print(currentplayer.getStringHand())
-        var = int(input("Please choose index of card: "))
+def filter_suit (suit,hand):
+    possibleCards = []
+    for card in hand:
+        if card.suit == suit:
+            possibleCards.append(card)
         
-        #check if index is correct
-        if(var < 0 or var > (10-turn) ):
-            print("\n###################\nIndex out of range\n###################")
+    if possibleCards:
+        return possibleCards
+    else:
+        return hand         
+
+
+def getCardInput(currentplayer, turn, currentSuit, currentPlayedCards) :
+    valid_cards = []
+
+    if len(currentPlayedCards)>0:
+        print('\n###################\nCurrent played cards')
+        for playerID in currentPlayedCards:
+            print(playerID + '->' + currentPlayedCards[playerID].getStringCard())
+        print('\n###################')
+    hand = currentplayer.getHand()
+    if currentSuit != "":
+        valid_cards = filter_suit(currentSuit, hand)
+        
+    else:
+        valid_cards = hand
+    
+    index = 0
+    for card in valid_cards:
+        print(index, ":" , card.getStringCard())
+        index+=1
+    
+    while True:  
+        var = int(input("Please choose index of card: "))
+        if 0 > var or var > len(valid_cards):
             continue
-
-        #check if is a legal move
-        elif not(currentplayer.validateMove(var, currentSuit)):
-            print("\n###################\nInvalid Move. Player should respect Suit\n###################")
-            continue
-
-        else:
-            return var
-
+        return valid_cards[var]
+        
 
 
 def playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards):
 
-    index = getCardInput(currentPlayer, turn, currentSuit, currentPlayedCards)
-    playedCard = currentPlayer.getHand()[index]
-    currentPlayer.playCardManual(index)
+    playedCard = getCardInput(currentPlayer, turn, currentSuit, currentPlayedCards)
+    #playedCard = currentPlayer.getHand()[index]
+    currentPlayer.playCardManual(playedCard)
     print(currentPlayer.getId() + " played " + playedCard.getStringCard())
     return playedCard
 
 
 #nao assume por agora trunfo
-def checkTurnWinner(currentPlayedCards, currentSuit):
+def checkTurnWinner(currentPlayedCards, currentSuit,trump):
     
-    winner = ''
-    maxValueCard = 0
+    winner = ""
+    winningCard = None
+    points = 0
 
-    for player in currentPlayedCards:
-        playedCard = currentPlayedCards[player]
-        print(player + ' -> ' + playedCard.getStringCard())
-        if (maxValueCard < playedCard.getCardPoints()) and (playedCard.getSuit() == currentSuit):
-            maxValueCard = playedCard.getCardPoints()
-            winner = player
+    for playerKey in currentPlayedCards:
 
-    return winner
+        playedCard = currentPlayedCards[playerKey]
+        points += playedCard.getCardPoints()
+        print(playerKey + ' -> ' + playedCard.getStringCard())
+
+        cardSuit = playedCard.getSuit()
+        if(winningCard == None):
+            if (currentSuit != cardSuit):
+                print ("dicks out tribolinhas")
+            winningCard = playedCard
+            winner = playerKey
+        elif ((cardSuit != winningCard.getSuit() ) and (cardSuit == trump)):
+            winningCard = playedCard
+            winner = playerKey
+        elif (winningCard.getCardPoints() < playedCard.getCardPoints()):
+            winningCard = playedCard
+            winner = playerKey
+    return winner,points
 
 
 
 def main():
 
-    players = setupSueca()
-    startGame(players)
+    players,gameTrump = setupSueca()
+    startGame(players,gameTrump)
 
 
     

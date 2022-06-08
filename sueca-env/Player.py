@@ -1,4 +1,4 @@
-from msilib.schema import SelfReg
+#from msilib.schema import SelfReg
 from operator import truediv
 from random import random
 from unittest import suite
@@ -8,33 +8,38 @@ class Player:
 
     hand = []
 
-    def __init__(self, _id, _partner,) -> None:
-        self.id = _id  
-        self.partner = _partner
+    def __init__(self, id, partner,) -> None:
+        self._id = id  
+        self._partner = partner
+        self._points = 0
 
     def getHand(self):
-        return self.hand
+        return self._hand
     
     def getStringHand(self):
         i = 0
         returnStr = ''
-        for card in self.hand:
+        for card in self._hand:
             returnStr += str(i) + ":" + card.getStringCard() +'\n'
             i += 1
             
         return returnStr  
 
 
-    def setHand(self, _hand):
-        self.hand = _hand
+    def setHand(self, hand):
+        self._hand = hand
     
     def getId(self):
-        return self.id
+        return self._id
+
+    def setPoints(self,points):
+        self._points = points
     
-    def playCardManual(self, pos):
-        card = self.hand[pos]
-        self.hand.remove(card)
-        return card
+    def getPoints(self):
+        return self._points
+    
+    def playCardManual(self, card):
+        self._hand.remove(card)
 
 
     def playCardStrategy (self, strategy, initialSuit):
@@ -50,9 +55,9 @@ class Player:
 
     def playRandomCard(self, initialSuit):
         if(initialSuit == 'none'):
-            possibleCards = self.hand
+            possibleCards = self._hand
         else:
-            possibleCards = self.filterSuitCards(initialSuit, self.hand)
+            possibleCards = self.filterSuitCards(initialSuit, self._hand)
 
         #cards with the corresponding suit in hand
         if len(possibleCards):
@@ -60,9 +65,9 @@ class Player:
 
         #no cards with the corresponding suit in hand
         else:
-            card = random.choice(self.hand)
+            card = random.choice(self._hand)
 
-        self.hand.remove(card)
+        self._hand.remove(card)
         return card
 
 
@@ -81,7 +86,7 @@ class Player:
             return True
 
         possibleCards = self.filterSuitCards(currentSuit, self.hand)
-        card = self.hand[index]
+        card = self._hand[index]
         if len(possibleCards) == 0:
             return True
 
