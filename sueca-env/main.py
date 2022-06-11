@@ -1,7 +1,8 @@
 from email.policy import default
 import random
 from Card import Card
-from Players import RandomPlayer
+from Enum import Convention
+from Players import RandomPlayer, ConventionalPlayer
 from RealPlayer import RealPlayer
 
 
@@ -65,10 +66,37 @@ def startGame(players,trump):
             
 def initPlayers() :
     players = []
-    p1 = RandomPlayer('P1', 'P3','A')
-    p2 = RandomPlayer('P2', 'P4','B')
-    p3 = RandomPlayer('P3', 'P1','A')
-    p4 = RandomPlayer('P4', 'P2','B')
+    correctInput = False
+    while (not correctInput):
+        print("\nIndicate what type of players you want:\n RandomPlayers -> 0\n ConventionalPlayers -> 1")
+        inputPlayerType = input()
+        if (inputPlayerType == "0"):
+            correctInput = True
+            p1 = RandomPlayer('P1', 'P3','A')
+            p2 = RandomPlayer('P2', 'P4','B')
+            p3 = RandomPlayer('P3', 'P1','A')
+            p4 = RandomPlayer('P4', 'P2','B')
+
+        elif (inputPlayerType == "1"):
+            correctInput = True
+            correctInput2 = False
+            while (not correctInput2):
+                print("\nChoose what type of social convention should the players follow\n AlwaysHighestCard -> 1")
+                print(" AlwaysLowestCard -> 2\n AlwaysHighestTrumpCard -> 3\n AlwaysLowestTrumpCard -> 4")
+                inputConvention = input()
+                if(eval(inputConvention) in [1,2,3,4]):
+                    correctInput2 = True
+                    convention = Convention(eval(inputConvention))
+                    print(convention.name)
+                    p1 = ConventionalPlayer('P1', 'P3','A', convention)
+                    p2 = ConventionalPlayer('P2', 'P4','B', convention)
+                    p3 = ConventionalPlayer('P3', 'P1','A', convention)
+                    p4 = ConventionalPlayer('P4', 'P2','B', convention)
+                else:
+                    print("\nInvalid Convention input. Press 0, 1, 2 or 4")
+        else:
+            print("\nInvalid Player Type input. Press 0 or 1 ")
+
     players.append(p1)
     players.append(p2)
     players.append(p3)
@@ -160,14 +188,14 @@ def playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards):
 #
 def selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards):
 
-    playedCard = getValidPlay(currentPlayer, currentSuit, currentPlayedCards)
-    currentPlayer.getInfo(currentPlayedCards,trump)
+    playedCard = getValidPlay(currentPlayer, currentSuit, currentPlayedCards, trump)
+   # currentPlayer.getInfo(currentPlayedCards,trump)
     currentPlayer.playCardManual(playedCard)
     print(currentPlayer.getId() + " played " + playedCard.getStringCard())
     return playedCard
 
 
-def getValidPlay(currentplayer, currentSuit, currentPlayedCards) :
+def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump) :
     valid_cards = []
 
     if len(currentPlayedCards)>0:
@@ -182,7 +210,11 @@ def getValidPlay(currentplayer, currentSuit, currentPlayedCards) :
     else:
         valid_cards = hand
     
-    return currentplayer.makePlay(valid_cards)
+    if (isinstance(currentplayer, RandomPlayer)):
+        return currentplayer.makePlay(valid_cards)
+    elif (isinstance(currentplayer, ConventionalPlayer)):
+        convention = currentplayer.getSocialConvetion()
+        return currentplayer.makePlay(valid_cards, convention, trump)
 
 # ========================================== SELF PLAYERS ==========================================
 
