@@ -1,7 +1,7 @@
 #from msilib.schema import SelfReg
 from abc import ABC, abstractmethod
 from operator import truediv
-from random import random
+import random
 from unittest import suite
 from Card import Card
 
@@ -53,4 +53,20 @@ class Player(ABC):
     @abstractmethod
     def makePlay(self) -> Card:
         raise NotImplementedError()
+
+# =================================================================================================
+
+class RandomPlayer(Player):
+
+    def __init__(self, id, partner,team) -> None:
+        super(RandomPlayer,self).__init__(id, partner,team)
+
+    def getInfo(self,currentPlayedCards,trump):
+        return
+
         
+
+    def makePlay(self,validCards):
+        return random.choice(validCards)
+        
+# =================================================================================================

@@ -1,8 +1,7 @@
 from email.policy import default
 import random
 from Card import Card
-from Player import Player
-from RandomPlayer import RandomPlayer
+from Players import RandomPlayer
 from RealPlayer import RealPlayer
 
 
