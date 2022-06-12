@@ -4,7 +4,8 @@ from Card import Card
 from Enum import Convention
 from Players import RandomPlayer, ConventionalPlayer
 from RealPlayer import RealPlayer
-
+from Teams import createTeams
+from utils import compare_results
 
 card_value =['ACE','SEVEN','KING','QUEEN','JACK','TWO','THREE','FOUR','FIVE','SIX']
 card_suit = ['Heart', 'Club', 'Diamond', 'Spades']
@@ -19,14 +20,12 @@ def setupSueca():
     printPlayersHands(players)
     print("###  CURRENT TRUMP : ", gameTrump ,"###" )
     return players, gameTrump
-
-
+  
 def startGame(players,trump):
     initialPlayer = random.choice(players)
     playerIndex = players.index(initialPlayer)
     nr_cards_played = 0  
     gameTrump = trump
-    currentCards = []
 
     for turn in range (1, 11):
         print("#############################################\nCurrent turn:" + str(turn))
@@ -64,44 +63,7 @@ def startGame(players,trump):
                 
                 #put that player as leaded
             
-def initPlayers() :
-    players = []
-    correctInput = False
-    while (not correctInput):
-        print("\nIndicate what type of players you want:\n RandomPlayers -> 0\n ConventionalPlayers -> 1")
-        inputPlayerType = input()
-        if (inputPlayerType == "0"):
-            correctInput = True
-            p1 = RandomPlayer('P1', 'P3','A')
-            p2 = RandomPlayer('P2', 'P4','B')
-            p3 = RandomPlayer('P3', 'P1','A')
-            p4 = RandomPlayer('P4', 'P2','B')
 
-        elif (inputPlayerType == "1"):
-            correctInput = True
-            correctInput2 = False
-            while (not correctInput2):
-                print("\nChoose what type of social convention should the players follow\n AlwaysHighestCard -> 1")
-                print(" AlwaysLowestCard -> 2\n AlwaysHighestTrumpCard -> 3\n AlwaysLowestTrumpCard -> 4")
-                inputConvention = input()
-                if(eval(inputConvention) in [1,2,3,4]):
-                    correctInput2 = True
-                    convention = Convention(eval(inputConvention))
-                    print(convention.name)
-                    p1 = ConventionalPlayer('P1', 'P3','A', convention)
-                    p2 = ConventionalPlayer('P2', 'P4','B', convention)
-                    p3 = ConventionalPlayer('P3', 'P1','A', convention)
-                    p4 = ConventionalPlayer('P4', 'P2','B', convention)
-                else:
-                    print("\nInvalid Convention input. Press 0, 1, 2 or 4")
-        else:
-            print("\nInvalid Player Type input. Press 0 or 1 ")
-
-    players.append(p1)
-    players.append(p2)
-    players.append(p3)
-    players.append(p4)
-    return players
 
 def distributeCards(players, deck):
     for player in players:
@@ -235,7 +197,7 @@ def checkTurnWinner(currentPlayedCards, currentSuit,trump):
         cardSuit = playedCard.getSuit()
         if(winningCard == None):
             if (currentSuit != cardSuit):
-                print ("dicks out tribolinhas")
+                print ("error in function check turn winner")
             winningCard = playedCard
             winner = playerKey
         elif ((cardSuit != winningCard.getSuit() ) and (cardSuit == trump)):
@@ -264,15 +226,86 @@ def checkWinningTeam(players):
 
 
 
+
+
+################################################   NEW   ###############################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+def startSimulation(players,trump):
+    initialPlayer = random.choice(players)
+    playerIndex = players.index(initialPlayer)
+    nr_cards_played = 0  
+    gameTrump = trump
+
+    for turn in range (1, 11):
+        print("#############################################\nCurrent turn:" + str(turn))
+        nr_cards_played = 0
+        currentSuit = ""
+        currentPlayedCards = {}
+
+        while nr_cards_played < 4:
+
+            currentPlayer = players[playerIndex]  # current player is "P'n'"
+            #card = playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards)
+            card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards)
+            currentPlayedCards[currentPlayer.getId()] = card
+
+            if currentSuit == "":
+                currentSuit = card.getSuit()
+
+            nr_cards_played += 1
+            playerIndex += 1
+
+            if playerIndex >= len(players):
+                playerIndex = 0
+
+            if nr_cards_played == 4 :
+                winner,points = checkTurnWinner(currentPlayedCards, currentSuit,gameTrump)
+                print('Turn winner:' + winner + " \n" + "Round Points:" , points)
+                for p in players:
+                    if p.getId() == winner:
+                        break
+                    continue
+                p.setPoints(points)
+
+
+
+
+def setupMatch(teamNameA, teamElemsA, teams, deck, nSimulations):
+
+    for teamNameB, teamElemsB in teams.items():
+        counter = 0
+        players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]
+        while counter < nSimulations:
+            deck = buildDeck()
+            random.shuffle(deck)
+            simTrump = distributeCards(players,deck)
+            startSimulation(players, simTrump)
+            counter = counter + 1
+            checkWinningTeam(players)
+            #think it needs to reset players points here
+
+
+
 def main():
-    players,gameTrump = setupSueca()
-    startGame(players,gameTrump)
-    checkWinningTeam(players)
+
+    teams = createTeams()
+    nSimulations = 10
+    for teamName, teamElem in teams.items():
+        setupMatch(teamName, teamElem, teams, nSimulations)
 
 
-    
-if __name__ == "__main__":
-    main()
 
 
 

@@ -9,12 +9,12 @@ from Enum import Convention
 
 class Player(ABC):
 
-    def __init__(self, id, partner,team) -> None:
+    def __init__(self, id) -> None:
         self._id = id  
-        self._partner = partner
+        self._partner = ''
         self._points = 0
         self._hand = []
-        self._team = team
+        self._team = ''
         self._playedCards={}
 
     def getHand(self):
@@ -31,6 +31,9 @@ class Player(ABC):
             i += 1
             
         return returnStr  
+
+    def setTeam(self, team):
+        self._team = team
 
     def setHand(self, hand):
         self._hand = hand
@@ -59,8 +62,8 @@ class Player(ABC):
 
 class RandomPlayer(Player):
 
-    def __init__(self, id, partner, team) -> None:
-        super(RandomPlayer,self).__init__(id, partner,team)
+    def __init__(self, id) -> None:
+        super(RandomPlayer,self).__init__(id)
 
     def getInfo(self,currentPlayedCards,trump):
         return
@@ -72,8 +75,8 @@ class RandomPlayer(Player):
 
 class ConventionalPlayer(Player):
 
-    def __init__(self, id, partner, team, socialConvention) -> None:
-        super(ConventionalPlayer,self).__init__(id, partner,team)
+    def __init__(self, id, socialConvention) -> None:
+        super(ConventionalPlayer,self).__init__(id)
         self.socialConvention = socialConvention
 
     def getInfo(self,currentPlayedCards,trump):
