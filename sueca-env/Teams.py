@@ -1,5 +1,6 @@
 from Enum import Convention
 from Players import RandomPlayer, ConventionalPlayer
+import copy
 
 def oldInitPlayers ():
     players = []
@@ -63,7 +64,9 @@ def createTeams():
     teams = {}
     for i in range(0, len(players)):
         for i2 in range(i, len(players)):
-            teamName = players[i].getId() + " + " + players[i2].getId() 
-            teams.update( { teamName : (players[i] , players[i2]) } )
+            p1 = copy.deepcopy(players[i])
+            p2 = copy.deepcopy(players[i2])
+            teamName = p1.getId() + " + " + p2.getId() 
+            teams.update( { teamName : (p1 , p2) } )
     
     return teams

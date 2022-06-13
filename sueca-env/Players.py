@@ -44,6 +44,9 @@ class Player(ABC):
     def setPoints(self,points):
         self._points += points
     
+    def resetPoints(self):
+        self._points = 0
+    
     def getPoints(self):
         return self._points
     

@@ -1,18 +1,19 @@
 from email.policy import default
+from os import abort
 import random
 from Card import Card
-from Enum import Convention
 from Players import RandomPlayer, ConventionalPlayer
 from RealPlayer import RealPlayer
 from Teams import createTeams
 from utils import compare_results
+import copy
 
 card_value =['ACE','SEVEN','KING','QUEEN','JACK','TWO','THREE','FOUR','FIVE','SIX']
 card_suit = ['Heart', 'Club', 'Diamond', 'Spades']
 
 
 # ======================================== SetUp ========================================
-def setupSueca():
+"""def setupSueca():
     players= initPlayers()
     deck = buildDeck()
     random.shuffle(deck)
@@ -63,6 +64,7 @@ def startGame(players,trump):
                 
                 #put that player as leaded
             
+"""
 
 
 def distributeCards(players, deck):
@@ -107,14 +109,14 @@ def filter_suit (suit,hand):
 
 
 # ========================================== REAL PLAYERS/ ==========================================
-def getCardInput(currentplayer, turn, currentSuit, currentPlayedCards) :
+"""def getCardInput(currentplayer, turn, currentSuit, currentPlayedCards) :
     valid_cards = []
 
-    if len(currentPlayedCards)>0:
-        print('\n###################\nCurrent played cards')
-        for playerID in currentPlayedCards:
-            print(playerID + '->' + currentPlayedCards[playerID].getStringCard())
-        print('\n###################')
+    #if len(currentPlayedCards)>0:
+    #    print('\n###################\nCurrent played cards')
+     #   for playerID in currentPlayedCards:
+    #        print(playerID + '->' + currentPlayedCards[playerID].getStringCard())
+     #   print('\n###################')
     hand = currentplayer.getHand()
     if currentSuit != "":
         valid_cards = filter_suit(currentSuit, hand)
@@ -134,14 +136,18 @@ def getCardInput(currentplayer, turn, currentSuit, currentPlayedCards) :
         return valid_cards[var]
     
 def playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards):
-
+    print("player turn being called")
     playedCard = getCardInput(currentPlayer, turn, currentSuit, currentPlayedCards)
     #playedCard = currentPlayer.getHand()[index]
     currentPlayer.playCardManual(playedCard)
     print(currentPlayer.getId() + " played " + playedCard.getStringCard())
-    return playedCard
+    return playedCard"""
 
 # ========================================== /REAL PLAYERS ==========================================
+
+
+
+
 
 
 # ========================================== SELF PLAYERS ==========================================
@@ -149,39 +155,36 @@ def playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards):
 # The agent will play instead of waiting for input
 #
 def selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards):
-
     playedCard = getValidPlay(currentPlayer, currentSuit, currentPlayedCards, trump)
    # currentPlayer.getInfo(currentPlayedCards,trump)
     currentPlayer.playCardManual(playedCard)
-    print(currentPlayer.getId() + " played " + playedCard.getStringCard())
+  #  print(currentPlayer.getId() + " played " + playedCard.getStringCard())
     return playedCard
 
 
 def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump) :
     valid_cards = []
 
-    if len(currentPlayedCards)>0:
-        print('\n###################\nCurrent played cards')
-        for playerID in currentPlayedCards:
-            print(playerID + '->' + currentPlayedCards[playerID].getStringCard())
-        print('\n###################')
+    #if len(currentPlayedCards)>0:
+    #    print('\n###################\nCurrent played cards')
+    #    for playerID in currentPlayedCards:
+    #        print(playerID + '->' + currentPlayedCards[playerID].getStringCard())
+    #    print('\n###################')
+
     hand = currentplayer.getHand()
     if currentSuit != "":
         valid_cards = filter_suit(currentSuit, hand)
         
     else:
         valid_cards = hand
-    
     if (isinstance(currentplayer, RandomPlayer)):
         return currentplayer.makePlay(valid_cards)
     elif (isinstance(currentplayer, ConventionalPlayer)):
         convention = currentplayer.getSocialConvetion()
         return currentplayer.makePlay(valid_cards, convention, trump)
 
-# ========================================== SELF PLAYERS ==========================================
 
 
-#nao assume por agora trunfo
 def checkTurnWinner(currentPlayedCards, currentSuit,trump):
     
     winner = ""
@@ -192,7 +195,7 @@ def checkTurnWinner(currentPlayedCards, currentSuit,trump):
 
         playedCard = currentPlayedCards[playerKey]
         points += playedCard.getCardPoints()
-        print(playerKey + ' -> ' + playedCard.getStringCard())
+        #print(playerKey + ' -> ' + playedCard.getStringCard())
 
         cardSuit = playedCard.getSuit()
         if(winningCard == None):
@@ -209,19 +212,17 @@ def checkTurnWinner(currentPlayedCards, currentSuit,trump):
     return winner,points
 
 def checkWinningTeam(players):
-    teamA = 0
-    teamB = 0
+    teamApoints = 0
+    teamBpoints  = 0
     for p in players:
         if p.getTeam() == "A":
-            teamA += p.getPoints()
-        else:
-            teamB += p.getPoints()
-    if teamA > teamB:
-        print("################### P1 AND P3 won with :", teamA, " ###################")
-    elif teamA < teamB:
-        print("################### P2 AND P4 won with : ", teamB, " ###################")
-    else:
-        print("################### DRAW ###################")
+            teamApoints += p.getPoints()
+            p.resetPoints()
+        elif p.getTeam() == "B":
+            teamBpoints += p.getPoints()
+            p.resetPoints()
+
+    return teamApoints, teamBpoints
 
 
 
@@ -249,7 +250,7 @@ def startSimulation(players,trump):
     gameTrump = trump
 
     for turn in range (1, 11):
-        print("#############################################\nCurrent turn:" + str(turn))
+       # print("#############################################\nCurrent turn:" + str(turn))
         nr_cards_played = 0
         currentSuit = ""
         currentPlayedCards = {}
@@ -257,7 +258,6 @@ def startSimulation(players,trump):
         while nr_cards_played < 4:
 
             currentPlayer = players[playerIndex]  # current player is "P'n'"
-            #card = playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards)
             card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards)
             currentPlayedCards[currentPlayer.getId()] = card
 
@@ -272,7 +272,6 @@ def startSimulation(players,trump):
 
             if nr_cards_played == 4 :
                 winner,points = checkTurnWinner(currentPlayedCards, currentSuit,gameTrump)
-                print('Turn winner:' + winner + " \n" + "Round Points:" , points)
                 for p in players:
                     if p.getId() == winner:
                         break
@@ -282,30 +281,63 @@ def startSimulation(players,trump):
 
 
 
-def setupMatch(teamNameA, teamElemsA, teams, deck, nSimulations):
+def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
 
     for teamNameB, teamElemsB in teams.items():
+        teamElemsB[0].setTeam("B")
+        teamElemsB[1].setTeam("B")
         counter = 0
         players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]
+        simResultsA = []
+        simResultsB = []
         while counter < nSimulations:
             deck = buildDeck()
             random.shuffle(deck)
             simTrump = distributeCards(players,deck)
             startSimulation(players, simTrump)
-            counter = counter + 1
-            checkWinningTeam(players)
-            #think it needs to reset players points here
+            counter += 1
+            teamApoints, teamBpoints = checkWinningTeam(players)
+            if((teamApoints + teamBpoints) != 120):
+                print("\nfuckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n")
+            simResultsA.append(teamApoints)
+            simResultsB.append(teamBpoints)
 
+        teamA = mainDict.get(teamNameA)
+        teamB = mainDict.get(teamNameB)
+        if teamA:
+            teamA.update( { teamNameB : simResultsA } )
+        else:
+            mainDict.update( {teamNameA : { teamNameB : simResultsA } })
+        
+        if teamB:
+            teamB.update( { teamNameA : simResultsB } )
+        else:
+            mainDict.update( {teamNameB : { teamNameA : simResultsB } })  
+    
+
+
+def printDict(dick):
+    for team, subdick in dick.items():
+        print("\n \n \n ", "Main team: ", team, ":")
+        for vsTeam, result in subdick.items():
+            print("results against ", vsTeam, ":", result)
 
 
 def main():
 
+    mainDict = {}
     teams = createTeams()
-    nSimulations = 10
-    for teamName, teamElem in teams.items():
-        setupMatch(teamName, teamElem, teams, nSimulations)
+    teamsAux = copy.deepcopy(teams)
+    nSimulations = 2
+    for teamNameA, teamElemsA in teams.items():
+        teamElemsA[0].setTeam("A")
+        teamElemsA[1].setTeam("A")
+        setupMatch(mainDict, teamNameA, teamElemsA, teamsAux, nSimulations)
+        teamsAux.pop(teamNameA)
+
+    printDict(mainDict)
 
 
 
-
-
+if __name__ == "__main__":
+    main()
