@@ -104,17 +104,26 @@ def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, conf
     ax.set_xticklabels(names)
     ax.set_title(title)
     ax.yaxis.grid(True)
+
+    #sets 60 y-value red
+    aux = ax.get_ygridlines()[3]
+    aux.set_color("red")
+    aux.set_linewidth(1)
+    
     if yscale is not None:
         plt.yscale(yscale)
     plt.tight_layout()
     if filename is not None:
-        plt.savefig(filename)
+        dpi = 100
+        fig = plt.gcf()
+        fig.set_size_inches((1500/dpi),(600/dpi))
+        fig.savefig(filename, dpi=dpi)
     if show:
         plt.show()
     plt.close()
 
 
-def compare_results(results, confidence=0.95, title="Agents Comparison", metric="Steps Per Episode", colors=None):
+def compare_results(results, confidence=0.95, title="Agents Comparison", metric="Avg. Points Per Simulation", colors=None, filename = None, show=True):
 
     """Displays a bar plot comparing the performance of different agents/teams.
 
@@ -146,7 +155,7 @@ def compare_results(results, confidence=0.95, title="Agents Comparison", metric=
         N=N,
         title=title,
         x_label="", y_label=f"Avg. {metric}",
-        confidence=confidence, show=True, colors=colors
+        confidence=confidence, show=show, filename = filename, colors=colors
     )
 
 

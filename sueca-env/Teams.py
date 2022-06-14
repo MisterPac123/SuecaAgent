@@ -57,16 +57,16 @@ def createTeams():
     LTC= Convention(4)
 
     #create Players
-    players = [RandomPlayer('Random'), ConventionalPlayer('HCC', HCC), ConventionalPlayer('LCC', LCC),
+    players = [RandomPlayer('Rand'), ConventionalPlayer('HCC', HCC), ConventionalPlayer('LCC', LCC),
     ConventionalPlayer('HTC', HTC),ConventionalPlayer('LTC', LTC)]
 
     #create all possible unique teams of 2 from players, adds them to a dictionary with the key being their team name: 15 teams
     teams = {}
-    for i in range(0,1):#range(0, len(players)):
-        for i2 in range(0,1):#range(i, len(players)):
+    for i in range(0, len(players)):
+        for i2 in range(i, len(players)):
             p1 = copy.deepcopy(players[i])
             p2 = copy.deepcopy(players[i2])
-            teamName = p1.getId() + " + " + p2.getId() 
+            teamName = p1.getId() + "-" + p2.getId() 
             teams.update( { teamName : (p1 , p2) } )
     
     return teams

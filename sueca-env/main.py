@@ -1,12 +1,15 @@
 from email.policy import default
-from os import abort
+import os
 import random
 from Card import Card
 from Players import RandomPlayer, ConventionalPlayer
 from RealPlayer import RealPlayer
 from Teams import createTeams
+import numpy as np
 #from utils import compare_results
 import copy
+
+from utils import compare_results
 
 card_value =['ACE','SEVEN','KING','QUEEN','JACK','TWO','THREE','FOUR','FIVE','SIX']
 card_suit = ['Heart', 'Club', 'Diamond', 'Spades']
@@ -284,20 +287,20 @@ def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
         teamElemsB[1].setTeam("B")
         counter = 0
         players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]  # PROBLEM !!!!  ALTERING TEAM B FROM THE AUX !!!!!!!!!!!!
-        simResultsA = []
-        simResultsB = []
-        while counter < nSimulations:
+        simResultsA = np.zeros(nSimulations)
+        simResultsB = np.zeros(nSimulations)
+        for sim in range(nSimulations):
             deck = buildDeck()
             random.shuffle(deck)
             simTrump = distributeCards(players,deck)
             startSimulation(players, simTrump)
             counter += 1
-            debugPlayer(players)
+           # debugPlayer(players)
             teamApoints, teamBpoints = checkWinningTeam(players)
             if((teamApoints + teamBpoints) != 120):
-                print("\nfuckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n")
-            simResultsA.append(teamApoints)
-            simResultsB.append(teamBpoints)
+                raise Exception("Round points don't add up to 120")
+            simResultsA[sim] = teamApoints
+            simResultsB[sim] = teamBpoints
 
         teamA = mainDict.get(teamNameA)
         teamB = mainDict.get(teamNameB)
@@ -324,19 +327,32 @@ def debugPlayer(players):
     for p in players:
         print(p.getId(),p.getTeam(), "Points : ", p.getPoints())
 
-def main():
+def createPlots(dict):
+    path= os.path.abspath("plots")
+    for key, subdict in dict.items():
+        filename = path + "/" + key + ".png"
+        compare_results(
+        subdict,
+        title = "Team " + key + " against other teams",
+        colors=["orange", "red", "blue", "green", "yellow",
+        "violet", "aqua", "olive", "peru", "salmon",
+        "silver", "skyblue","teal", "tomato", "brown"],filename=filename, show = False)
+    
 
+def main():
     mainDict = {}
     teams = createTeams()
     teamsAux = copy.deepcopy(teams)
-    nSimulations = 1
+    nSimulations = 10
     for teamNameA, teamElemsA in teams.items():
         teamElemsA[0].setTeam("A")
         teamElemsA[1].setTeam("A")
         setupMatch(mainDict, teamNameA, teamElemsA, teamsAux, nSimulations)
         teamsAux.pop(teamNameA)
 
-    printDict(mainDict)
+   # printDict(mainDict)
+
+    createPlots(mainDict)
 
 
 
