@@ -17,4 +17,9 @@
 # Done
 
     -> Always play a random card;
-    
+    -> Always play the highest card;
+    -> Always play the lowest card;
+    -> Always play a trump card when not able to follow suit;
+
+# WARNINGS
+    -> Be careful when using player ID. ALL can have the same ID 

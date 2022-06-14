@@ -5,7 +5,7 @@ from Card import Card
 from Players import RandomPlayer, ConventionalPlayer
 from RealPlayer import RealPlayer
 from Teams import createTeams
-from utils import compare_results
+#from utils import compare_results
 import copy
 
 card_value =['ACE','SEVEN','KING','QUEEN','JACK','TWO','THREE','FOUR','FIVE','SIX']
@@ -69,8 +69,6 @@ def startGame(players,trump):
 
 def distributeCards(players, deck):
     for player in players:
-        # select trump suit
-        #
         hand = random.sample(deck, 10)
         player.setHand(hand)
         for card in hand:
@@ -97,7 +95,7 @@ def printPlayersHands(players) :
 def filter_suit (suit,hand):
     possibleCards = []
     for card in hand:
-        if card.suit == suit:
+        if card.getSuit() == suit: # Changed
             possibleCards.append(card)
         
     if possibleCards:
@@ -158,7 +156,7 @@ def selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards):
     playedCard = getValidPlay(currentPlayer, currentSuit, currentPlayedCards, trump)
    # currentPlayer.getInfo(currentPlayedCards,trump)
     currentPlayer.playCardManual(playedCard)
-  #  print(currentPlayer.getId() + " played " + playedCard.getStringCard())
+    #print(currentPlayer.getId() + " played " + playedCard.getStringCard())
     return playedCard
 
 
@@ -177,6 +175,7 @@ def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump) :
         
     else:
         valid_cards = hand
+    
     if (isinstance(currentplayer, RandomPlayer)):
         return currentplayer.makePlay(valid_cards)
     elif (isinstance(currentplayer, ConventionalPlayer)):
@@ -213,7 +212,7 @@ def checkTurnWinner(currentPlayedCards, currentSuit,trump):
 
 def checkWinningTeam(players):
     teamApoints = 0
-    teamBpoints  = 0
+    teamBpoints = 0
     for p in players:
         if p.getTeam() == "A":
             teamApoints += p.getPoints()
@@ -221,7 +220,6 @@ def checkWinningTeam(players):
         elif p.getTeam() == "B":
             teamBpoints += p.getPoints()
             p.resetPoints()
-
     return teamApoints, teamBpoints
 
 
@@ -231,36 +229,33 @@ def checkWinningTeam(players):
 
 ################################################   NEW   ###############################################################
 
-
-
-
-
-
-
-
-
-
-
-
-
 def startSimulation(players,trump):
     initialPlayer = random.choice(players)
     playerIndex = players.index(initialPlayer)
-    nr_cards_played = 0  
-    gameTrump = trump
+    nr_cards_played = 0
 
     for turn in range (1, 11):
        # print("#############################################\nCurrent turn:" + str(turn))
         nr_cards_played = 0
         currentSuit = ""
         currentPlayedCards = {}
+        teamACounter = 0
+        teamBCounter = 0
 
         while nr_cards_played < 4:
 
-            currentPlayer = players[playerIndex]  # current player is "P'n'"
+            currentPlayer = players[playerIndex]  # current player is "NameOfAgentType"
             card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards)
-            currentPlayedCards[currentPlayer.getId()] = card
-
+            #currentPlayedCards[currentPlayer.getId()] = card  # PROBLEMA FOUND 10000000%
+            currentPlayedCards[id(currentPlayer)] = card  # USES THE ID OF THE OBJECT
+            '''
+            if(currentPlayer.getTeam()=="A"):
+                teamACounter+=1
+                currentPlayedCards[currentPlayer.getTeam()][currentPlayer.getId()+str(teamACounter)] = card 
+            else:
+                teamBCounter+=1    
+                currentPlayedCards[currentPlayer.getTeam()][currentPlayer.getId()+str(teamBCounter)] = card  # PROBLEMA FOUND 10000000%
+            '''
             if currentSuit == "":
                 currentSuit = card.getSuit()
 
@@ -271,9 +266,10 @@ def startSimulation(players,trump):
                 playerIndex = 0
 
             if nr_cards_played == 4 :
-                winner,points = checkTurnWinner(currentPlayedCards, currentSuit,gameTrump)
+                winner,points = checkTurnWinner(currentPlayedCards, currentSuit,trump)
                 for p in players:
-                    if p.getId() == winner:
+                    if id(p) == winner:
+                    #if p.getId() == winner:  #changed
                         break
                     continue
                 p.setPoints(points)
@@ -287,7 +283,7 @@ def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
         teamElemsB[0].setTeam("B")
         teamElemsB[1].setTeam("B")
         counter = 0
-        players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]
+        players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]  # PROBLEM !!!!  ALTERING TEAM B FROM THE AUX !!!!!!!!!!!!
         simResultsA = []
         simResultsB = []
         while counter < nSimulations:
@@ -296,6 +292,7 @@ def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
             simTrump = distributeCards(players,deck)
             startSimulation(players, simTrump)
             counter += 1
+            debugPlayer(players)
             teamApoints, teamBpoints = checkWinningTeam(players)
             if((teamApoints + teamBpoints) != 120):
                 print("\nfuckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n")
@@ -322,13 +319,17 @@ def printDict(dick):
         for vsTeam, result in subdick.items():
             print("results against ", vsTeam, ":", result)
 
+def debugPlayer(players):
+    print("=========== Debug to see how many points each player made, thus verifying that the overall values are correct ========== ")
+    for p in players:
+        print(p.getId(),p.getTeam(), "Points : ", p.getPoints())
 
 def main():
 
     mainDict = {}
     teams = createTeams()
     teamsAux = copy.deepcopy(teams)
-    nSimulations = 2
+    nSimulations = 1
     for teamNameA, teamElemsA in teams.items():
         teamElemsA[0].setTeam("A")
         teamElemsA[1].setTeam("A")

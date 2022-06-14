@@ -62,8 +62,8 @@ def createTeams():
 
     #create all possible unique teams of 2 from players, adds them to a dictionary with the key being their team name: 15 teams
     teams = {}
-    for i in range(0, len(players)):
-        for i2 in range(i, len(players)):
+    for i in range(0,1):#range(0, len(players)):
+        for i2 in range(0,1):#range(i, len(players)):
             p1 = copy.deepcopy(players[i])
             p2 = copy.deepcopy(players[i2])
             teamName = p1.getId() + " + " + p2.getId() 
