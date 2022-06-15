@@ -9,7 +9,7 @@ import numpy as np
 #from utils import compare_results
 import copy
 
-from utils import compare_results
+from utils import createAvgScorePlots, createWinPerctPlots
 
 card_value =['ACE','SEVEN','KING','QUEEN','JACK','TWO','THREE','FOUR','FIVE','SIX']
 card_suit = ['Heart', 'Club', 'Diamond', 'Spades']
@@ -327,16 +327,27 @@ def debugPlayer(players):
     for p in players:
         print(p.getId(),p.getTeam(), "Points : ", p.getPoints())
 
-def createPlots(dict):
+
+
+
+
+def evaluations(dict):
     path= os.path.abspath("plots")
     for key, subdict in dict.items():
-        filename = path + "/" + key + ".png"
-        compare_results(
+        filenameAvgScore = path + "/AvgScore/" + key + ".png"
+        filenameWinPrct = path + "/WinPrct/" + key + ".png"
+        createAvgScorePlots(
         subdict,
         title = "Team " + key + " against other teams",
         colors=["orange", "red", "blue", "green", "yellow",
         "violet", "aqua", "olive", "peru", "salmon",
-        "silver", "skyblue","teal", "tomato", "brown"],filename=filename, show = False)
+        "silver", "skyblue","teal", "tomato", "brown"],filename=filenameAvgScore, show = False)
+
+        createWinPerctPlots(subdict,
+        title = "Team " + key + " against other teams",
+        colors=["orange", "red", "blue", "green", "yellow",
+        "violet", "aqua", "olive", "peru", "salmon",
+        "silver", "skyblue","teal", "tomato", "brown"],filename=filenameWinPrct, show = False)
     
 
 def main():
@@ -352,7 +363,7 @@ def main():
 
    # printDict(mainDict)
 
-    createPlots(mainDict)
+    evaluations(mainDict)
 
 
 

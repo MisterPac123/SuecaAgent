@@ -62,7 +62,7 @@ def standard_error(std_dev, n, confidence):
     return z_table(confidence) * (std_dev / math.sqrt(n))
 
 
-def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, confidence, show=False, filename=None, colors=None, yscale=None):
+def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, confidence, show=False, filename=None, colors=None, yscale=None, flag=True):
     """Creates a bar plot for comparing different agents/teams.
 
     Parameters
@@ -93,8 +93,10 @@ def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, conf
     yscale: str
         The scale for the y-axis (default: linear)
     """
-
-    errors = [standard_error(std_devs[i], N[i], confidence) for i in range(len(means))]
+    if flag:
+        errors = [standard_error(std_devs[i], N[i], confidence) for i in range(len(means))]
+    else:
+        errors = None
     fig, ax = plt.subplots()
     x_pos = np.arange(len(names))
     ax.bar(x_pos, means, yerr=errors, align='center', alpha=0.5, color=colors if colors is not None else "gray", ecolor='black', capsize=10)
@@ -105,10 +107,11 @@ def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, conf
     ax.set_title(title)
     ax.yaxis.grid(True)
 
-    #sets 60 y-value red
-    aux = ax.get_ygridlines()[3]
-    aux.set_color("red")
-    aux.set_linewidth(1)
+    if flag:
+        #sets 60 y-value red
+        aux = ax.get_ygridlines()[3]
+        aux.set_color("red")
+        aux.set_linewidth(1)
     
     if yscale is not None:
         plt.yscale(yscale)
@@ -123,7 +126,7 @@ def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, conf
     plt.close()
 
 
-def compare_results(results, confidence=0.95, title="Agents Comparison", metric="Avg. Points Per Simulation", colors=None, filename = None, show=True):
+def createAvgScorePlots(results, confidence=0.95, title="Agents Comparison", metric="Avg. Points Per Simulation", colors=None, filename = None, show=True):
 
     """Displays a bar plot comparing the performance of different agents/teams.
 
@@ -158,5 +161,44 @@ def compare_results(results, confidence=0.95, title="Agents Comparison", metric=
         confidence=confidence, show=show, filename = filename, colors=colors
     )
 
+
+def calculateWinPrct(values):
+    prct =  ((values > 60).sum()) / (len(values)) 
+    return prct * 100
+
+def createWinPerctPlots(results, confidence=0.95, title="Agents Comparison", metric="Win %", colors=None, filename = None, show=True):
+
+    """Displays a bar plot comparing the performance of different agents/teams.
+
+        Parameters
+        ----------
+
+        results: dict
+            A dictionary where keys are the names and the values sequences of trials
+        confidence: float
+            The confidence level for the confidence interval
+        title: str
+            The title of the plot
+        metric: str
+            The name of the metric for comparison
+        colors: Sequence[str]
+            A sequence of colors (one for each agent/team)
+
+        """
+
+    names = list(results.keys())
+    winPrct = [calculateWinPrct(result) for result in results.values()]
+    stds = [result.std() for result in results.values()]
+    N = [result.size for result in results.values()]
+
+    plot_confidence_bar(
+        names=names,
+        means=winPrct,
+        std_devs=stds,
+        N=N,
+        title=title,
+        x_label="", y_label=metric,
+        confidence=confidence, show=show, filename = filename, colors=colors, flag=False
+    )
 
 
