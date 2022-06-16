@@ -27,6 +27,13 @@ class Player(ABC):
     def getDeck(self):
         return self._deck
 
+    def toStringList(self,l):
+        aux = []
+        for c in l:
+            aux.append(c.getStringCard())
+        return aux
+
+
     def getTeam(self):
         return self._team 
 
@@ -164,13 +171,16 @@ class MCTSPlayer (Player):
     def makePlay(self,valid_cards,currentPlayedCards,currentSuit, trump):
         cardsPlayed = []
         deck = self.getDeck()
+
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CURRENT DECK UNSEEN: ", len(deck))
         for _, cards in currentPlayedCards.items():
             cardsPlayed.append(cards)
-            deck.remove(cards)
+            if cards in deck :
+                deck.remove(cards)
         print("Cards Plyed So far",len(cardsPlayed))
         state  = MonteCarlo.State(len(cardsPlayed),cardsPlayed,trump,currentSuit)
         possblePlays = copy.copy(self.getHand())
-        #print(possblePlays)
+
         root = MonteCarlo.MCTSNode(possblePlays,deck,state,None,None)
         for i in range(0,self._nSimulation):
             print("================  newRound  ================\n")

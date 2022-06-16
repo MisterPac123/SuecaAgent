@@ -157,15 +157,15 @@ def playerTurn(currentPlayer, currentSuit, turn, currentPlayedCards):
 #
 # The agent will play instead of waiting for input
 #
-def selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards):
-    playedCard = getValidPlay(currentPlayer, currentSuit, currentPlayedCards, trump)
+def selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards,cardHistory):
+    playedCard = getValidPlay(currentPlayer, currentSuit, currentPlayedCards, trump,cardHistory)
    # currentPlayer.getInfo(currentPlayedCards,trump)
     currentPlayer.playCardManual(playedCard)
     #print(currentPlayer.getId() + " played " + playedCard.getStringCard())
     return playedCard
 
 
-def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump) :
+def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump,cardHistory) :
     valid_cards = []
 
     #if len(currentPlayedCards)>0:
@@ -187,6 +187,7 @@ def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump) :
         convention = currentplayer.getSocialConvetion()
         return currentplayer.makePlay(valid_cards, convention, trump)
     elif (isinstance(currentplayer, MCTSPlayer)):
+        currentplayer.trimDeck(cardHistory)
         return currentplayer.makePlay(valid_cards,currentPlayedCards,currentSuit, trump)
 
 
@@ -239,6 +240,7 @@ def startSimulation(players,trump):
     initialPlayer = random.choice(players)
     playerIndex = players.index(initialPlayer)
     nr_cards_played = 0
+    cardHistory = []
     
 
     for turn in range (1, 11):
@@ -248,11 +250,14 @@ def startSimulation(players,trump):
         currentPlayedCards = {}
         teamACounter = 0
         teamBCounter = 0
+        print("CARDS PLAYED SO FAR : " ,len(cardHistory), "Turn :" , turn)
 
         while nr_cards_played < 4:
-
+            
             currentPlayer = players[playerIndex]  # current player is "NameOfAgentType"
-            card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards)
+            card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards,cardHistory)
+            cardHistory.append(card)
+
             #currentPlayedCards[currentPlayer.getId()] = card  # PROBLEMA FOUND 10000000%
             currentPlayedCards[id(currentPlayer)] = card  # USES THE ID OF THE OBJECT
             '''Conventional
@@ -348,7 +353,7 @@ def main():
     mainDict = {}
     teams = createTeams()
     teamsAux = copy.deepcopy(teams)
-    nSimulations = 10
+    nSimulations = 100
     for teamNameA, teamElemsA in teams.items():
         teamElemsA[0].setTeam("A")
         teamElemsA[1].setTeam("A")

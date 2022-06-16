@@ -58,7 +58,7 @@ def createTeams():
 
     #create Players
     players = [RandomPlayer('Rand'), ConventionalPlayer('HCC', HCC), ConventionalPlayer('LCC', LCC),
-    ConventionalPlayer('HTC', HTC),ConventionalPlayer('LTC', LTC), MCTSPlayer("MonteCarlo", 1000)]
+    ConventionalPlayer('HTC', HTC),ConventionalPlayer('LTC', LTC), MCTSPlayer("MonteCarlo", 100)]
 
     #create all possible unique teams of 2 from players, adds them to a dictionary with the key being their team name: 15 teams
     teams = {}
