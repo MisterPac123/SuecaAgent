@@ -24,6 +24,9 @@ class Player(ABC):
     def getHand(self):
         return self._hand
     
+    def handLen(self):
+        return len(self._hand)
+    
     def getDeck(self):
         return self._deck
 
@@ -160,6 +163,7 @@ class MCTSPlayer (Player):
     def __init__(self, id, nSimulation) -> None:
         super(MCTSPlayer,self).__init__(id)
         self._nSimulation = nSimulation
+    
     def getInfo(self,currentPlayedCards,trump):
         return
     
@@ -171,17 +175,16 @@ class MCTSPlayer (Player):
     def makePlay(self,valid_cards,currentPlayedCards,currentSuit, trump):
         cardsPlayed = []
         deck = self.getDeck()
-
+        valid = copy.copy(valid_cards)
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CURRENT DECK UNSEEN: ", len(deck))
         for _, cards in currentPlayedCards.items():
             cardsPlayed.append(cards)
             if cards in deck :
                 deck.remove(cards)
-        print("Cards Plyed So far",len(cardsPlayed))
+        print("Cards Played So far",len(cardsPlayed))
         state  = MonteCarlo.State(len(cardsPlayed),cardsPlayed,trump,currentSuit)
-        possblePlays = copy.copy(self.getHand())
 
-        root = MonteCarlo.MCTSNode(possblePlays,deck,state,None,None)
+        root = MonteCarlo.MCTSNode(valid,self.handLen(),deck,state,None,None)
         for i in range(0,self._nSimulation):
             print("================  newRound  ================\n")
             root.transverseTree()

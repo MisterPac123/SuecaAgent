@@ -43,9 +43,9 @@ class State:
 
 class MCTSNode(ABC):
 
-    def __init__(self,possiblePlays,currentDeck,state,parent,playerPlay) -> None:
+    def __init__(self,possiblePlays,_nCardsInHand,currentDeck,state,parent,playerPlay) -> None:
         self._possiblePlays = possiblePlays # Hand in root, set of 10 cards in next
-        self._nCardsInHand = len(possiblePlays)
+        self._nCardsInHand = _nCardsInHand
         self._playerPlay = playerPlay #no need as its going to be put into the state ! -> see drawing
         self._currentDeck = currentDeck  # remaining deck
         self._nVisits = 0
@@ -128,11 +128,10 @@ class MCTSNode(ABC):
         self._possiblePlays.remove(play)
         newState = State(self._state.getPlayerTurn(),copy.copy(self._state.getCardsPlayed()),self._state.getTrump(),self._state.getSuit()) #copy.deepcopy(self._state)
         newState.addCard(play) # add new card to the list of played cards
-        self._children[play.getStringCard()] = MCTSNode(possiblePlays,remainDeck,newState,self,play)
+        self._children[play.getStringCard()] = MCTSNode(possiblePlays,self._nCardsInHand,remainDeck,newState,self,play)
         return play.getStringCard()
     
     def getValidMove(self):
-        #use filter_suit(self._possiblePlays,self._state.getSuit())
         return random.choice(self._possiblePlays)
 
     def rollout(self):

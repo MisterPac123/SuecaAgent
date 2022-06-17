@@ -72,6 +72,8 @@ def startGame(players,trump):
 
 def distributeCards(players, deck):
     aux = deck.copy()
+    positions = ["U","D","L","R"]
+    i = 0
     for player in players:
         hand = random.sample(aux, 10)
         player.setHand(hand)
@@ -253,7 +255,6 @@ def startSimulation(players,trump):
         print("CARDS PLAYED SO FAR : " ,len(cardHistory), "Turn :" , turn)
 
         while nr_cards_played < 4:
-            
             currentPlayer = players[playerIndex]  # current player is "NameOfAgentType"
             card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards,cardHistory)
             cardHistory.append(card)
@@ -274,8 +275,8 @@ def startSimulation(players,trump):
             nr_cards_played += 1
             playerIndex += 1
 
-            if playerIndex >= len(players):
-                playerIndex = 0
+            if playerIndex >= len(players):  
+               playerIndex = 0
 
             if nr_cards_played == 4 :
                 winner,points = checkTurnWinner(currentPlayedCards, currentSuit,trump)
@@ -285,6 +286,7 @@ def startSimulation(players,trump):
                         break
                     continue
                 p.setPoints(points)
+                playerIndex = players.index(p) # Now after each round, the playerindex is set to the winning player!
 
 
 
