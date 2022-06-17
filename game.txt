@@ -1,0 +1,845 @@
+> Press 0 to normal execution.
+> Press 1 for showcase execution
+1
+                                                      ########### GAME TRUMP:  Club  ###########
+                                                             ######## Turn:1  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart ACE  ###
+                                                              ###  Club KING  ###
+                                                              ###  Heart FOUR  ###
+                                                              ###  Diamond SEVEN  ###
+                                                              ###  Spades FOUR  ###
+                                                              ###  Club JACK  ###
+                                                              ###  Spades JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart FIVE  ###
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Spades SIX  ###
+                                                              ###  Club FOUR  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Diamond SIX  ###
+                                                              ###  Club THREE  ###
+                                                              ###  Diamond TWO  ###
+                                                              ###  Spades KING  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Heart JACK  ###
+                                                              ###  Diamond ACE  ###
+                                                              ###  Diamond KING  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Club FIVE  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Spades SEVEN  ###
+                                                              ###  Heart SIX  ###
+                                                              ###  Spades ACE  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Diamond THREE  ###
+                                                              ###  Heart QUEEN  ###
+                                                              ###  Spades THREE  ###
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Club SEVEN  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FOUR  ###
+                                                              ###  Diamond FIVE  ###
+                                                              ###  Club QUEEN  ###
+
+
+                                                             Turn Suit:  
+                                                           Player Rand  played Heart FOUR 
+
+                                                           Cards played in this turn:
+                                                                  Heart FOUR
+                                                           Player MonteCarlo  played Heart FIVE 
+
+                                                           Cards played in this turn:
+                                                                  Heart FOUR
+                                                                  Heart FIVE
+                                                           Player HCC  played Heart JACK 
+
+                                                           Cards played in this turn:
+                                                                  Heart FOUR
+                                                                  Heart FIVE
+                                                                  Heart JACK
+                                                           Player HTC  played Heart QUEEN 
+
+                                                           Cards played in this turn:
+                                                                  Heart FOUR
+                                                                  Heart FIVE
+                                                                  Heart JACK
+                                                                  Heart QUEEN
+
+                                                              Turn Winner:  HCC 
+                                                              Round Points:  5 
+
+                                                             ######## Turn:2  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart ACE  ###
+                                                              ###  Club KING  ###
+                                                              ###  Diamond SEVEN  ###
+                                                              ###  Spades FOUR  ###
+                                                              ###  Club JACK  ###
+                                                              ###  Spades JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Spades SIX  ###
+                                                              ###  Club FOUR  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Diamond SIX  ###
+                                                              ###  Club THREE  ###
+                                                              ###  Diamond TWO  ###
+                                                              ###  Spades KING  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  5
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Diamond ACE  ###
+                                                              ###  Diamond KING  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Club FIVE  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Spades SEVEN  ###
+                                                              ###  Heart SIX  ###
+                                                              ###  Spades ACE  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Diamond THREE  ###
+                                                              ###  Spades THREE  ###
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Club SEVEN  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FOUR  ###
+                                                              ###  Diamond FIVE  ###
+                                                              ###  Club QUEEN  ###
+
+
+                                                             Turn Suit:  
+                                                           Player HCC  played Diamond ACE 
+
+                                                           Cards played in this turn:
+                                                                  Diamond ACE
+                                                           Player HTC  played Diamond THREE 
+
+                                                           Cards played in this turn:
+                                                                  Diamond ACE
+                                                                  Diamond THREE
+                                                           Player Rand  played Diamond SEVEN 
+
+                                                           Cards played in this turn:
+                                                                  Diamond ACE
+                                                                  Diamond THREE
+                                                                  Diamond SEVEN
+                                                           Player MonteCarlo  played Diamond TWO 
+
+                                                           Cards played in this turn:
+                                                                  Diamond ACE
+                                                                  Diamond THREE
+                                                                  Diamond SEVEN
+                                                                  Diamond TWO
+
+                                                              Turn Winner:  HCC 
+                                                              Round Points:  21 
+
+                                                             ######## Turn:3  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart ACE  ###
+                                                              ###  Club KING  ###
+                                                              ###  Spades FOUR  ###
+                                                              ###  Club JACK  ###
+                                                              ###  Spades JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Spades SIX  ###
+                                                              ###  Club FOUR  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Diamond SIX  ###
+                                                              ###  Club THREE  ###
+                                                              ###  Spades KING  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  26
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Diamond KING  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Club FIVE  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Spades SEVEN  ###
+                                                              ###  Heart SIX  ###
+                                                              ###  Spades ACE  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Spades THREE  ###
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Club SEVEN  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FOUR  ###
+                                                              ###  Diamond FIVE  ###
+                                                              ###  Club QUEEN  ###
+
+
+                                                             Turn Suit:  
+                                                           Player HCC  played Spades ACE 
+
+                                                           Cards played in this turn:
+                                                                  Spades ACE
+                                                           Player HTC  played Spades THREE 
+
+                                                           Cards played in this turn:
+                                                                  Spades ACE
+                                                                  Spades THREE
+                                                           Player Rand  played Spades JACK 
+
+                                                           Cards played in this turn:
+                                                                  Spades ACE
+                                                                  Spades THREE
+                                                                  Spades JACK
+                                                           Player MonteCarlo  played Spades SIX 
+
+                                                           Cards played in this turn:
+                                                                  Spades ACE
+                                                                  Spades THREE
+                                                                  Spades JACK
+                                                                  Spades SIX
+
+                                                              Turn Winner:  HCC 
+                                                              Round Points:  14 
+
+                                                             ######## Turn:4  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart ACE  ###
+                                                              ###  Club KING  ###
+                                                              ###  Spades FOUR  ###
+                                                              ###  Club JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Club FOUR  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Diamond SIX  ###
+                                                              ###  Club THREE  ###
+                                                              ###  Spades KING  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Diamond KING  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Club FIVE  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Spades SEVEN  ###
+                                                              ###  Heart SIX  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Club SEVEN  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FOUR  ###
+                                                              ###  Diamond FIVE  ###
+                                                              ###  Club QUEEN  ###
+
+
+                                                             Turn Suit:  
+                                                           Player HCC  played Spades SEVEN 
+
+                                                           Cards played in this turn:
+                                                                  Spades SEVEN
+                                                           Player HTC  played Club QUEEN 
+
+                                                           Cards played in this turn:
+                                                                  Spades SEVEN
+                                                                  Club QUEEN
+                                                           Player Rand  played Spades FOUR 
+
+                                                           Cards played in this turn:
+                                                                  Spades SEVEN
+                                                                  Club QUEEN
+                                                                  Spades FOUR
+                                                           Player MonteCarlo  played Spades KING 
+
+                                                           Cards played in this turn:
+                                                                  Spades SEVEN
+                                                                  Club QUEEN
+                                                                  Spades FOUR
+                                                                  Spades KING
+
+                                                              Turn Winner:  MonteCarlo 
+                                                              Round Points:  16 
+
+                                                             ######## Turn:5  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart ACE  ###
+                                                              ###  Club KING  ###
+                                                              ###  Club JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  16
+                                                                      Hand: 
+
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Club FOUR  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Diamond SIX  ###
+                                                              ###  Club THREE  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Diamond KING  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Club FIVE  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Heart SIX  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Club SEVEN  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FOUR  ###
+                                                              ###  Diamond FIVE  ###
+
+
+                                                             Turn Suit:  
+                                                           Player MonteCarlo  played Diamond SIX 
+
+                                                           Cards played in this turn:
+                                                                  Diamond SIX
+                                                           Player HCC  played Diamond KING 
+
+                                                           Cards played in this turn:
+                                                                  Diamond SIX
+                                                                  Diamond KING
+                                                           Player HTC  played Diamond FOUR 
+
+                                                           Cards played in this turn:
+                                                                  Diamond SIX
+                                                                  Diamond KING
+                                                                  Diamond FOUR
+                                                           Player Rand  played Heart ACE 
+
+                                                           Cards played in this turn:
+                                                                  Diamond SIX
+                                                                  Diamond KING
+                                                                  Diamond FOUR
+                                                                  Heart ACE
+
+                                                              Turn Winner:  Rand 
+                                                              Round Points:  15 
+
+                                                             ######## Turn:6  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  15
+                                                                      Hand: 
+
+                                                              ###  Club KING  ###
+                                                              ###  Club JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  16
+                                                                      Hand: 
+
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Club FOUR  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Club THREE  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Club FIVE  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Heart SIX  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  0
+                                                                      Hand: 
+
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Club SEVEN  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FIVE  ###
+
+
+                                                             Turn Suit:  
+                                                           Player Rand  played Club KING 
+
+                                                           Cards played in this turn:
+                                                                  Club KING
+                                                           Player MonteCarlo  played Club FOUR 
+
+                                                           Cards played in this turn:
+                                                                  Club KING
+                                                                  Club FOUR
+                                                           Player HCC  played Club FIVE 
+
+                                                           Cards played in this turn:
+                                                                  Club KING
+                                                                  Club FOUR
+                                                                  Club FIVE
+                                                           Player HTC  played Club SEVEN 
+
+                                                           Cards played in this turn:
+                                                                  Club KING
+                                                                  Club FOUR
+                                                                  Club FIVE
+                                                                  Club SEVEN
+
+                                                              Turn Winner:  HTC 
+                                                              Round Points:  14 
+
+                                                             ######## Turn:7  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  15
+                                                                      Hand: 
+
+                                                              ###  Club JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Heart THREE  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  16
+                                                                      Hand: 
+
+                                                              ###  Diamond QUEEN  ###
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Club THREE  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Diamond JACK  ###
+                                                              ###  Heart SIX  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  14
+                                                                      Hand: 
+
+                                                              ###  Heart TWO  ###
+                                                              ###  Heart KING  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FIVE  ###
+
+
+                                                             Turn Suit:  
+                                                           Player HTC  played Heart TWO 
+
+                                                           Cards played in this turn:
+                                                                  Heart TWO
+                                                           Player Rand  played Heart THREE 
+
+                                                           Cards played in this turn:
+                                                                  Heart TWO
+                                                                  Heart THREE
+                                                           Player MonteCarlo  played Diamond QUEEN 
+
+                                                           Cards played in this turn:
+                                                                  Heart TWO
+                                                                  Heart THREE
+                                                                  Diamond QUEEN
+                                                           Player HCC  played Heart SIX 
+
+                                                           Cards played in this turn:
+                                                                  Heart TWO
+                                                                  Heart THREE
+                                                                  Diamond QUEEN
+                                                                  Heart SIX
+
+                                                              Turn Winner:  MonteCarlo 
+                                                              Round Points:  2 
+
+                                                             ######## Turn:8  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  15
+                                                                      Hand: 
+
+                                                              ###  Club JACK  ###
+                                                              ###  Club SIX  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  18
+                                                                      Hand: 
+
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+                                                              ###  Club THREE  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Spades TWO  ###
+                                                              ###  Diamond JACK  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  14
+                                                                      Hand: 
+
+                                                              ###  Heart KING  ###
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FIVE  ###
+
+
+                                                             Turn Suit:  
+                                                           Player MonteCarlo  played Club THREE 
+
+                                                           Cards played in this turn:
+                                                                  Club THREE
+                                                           Player HCC  played Diamond JACK 
+
+                                                           Cards played in this turn:
+                                                                  Club THREE
+                                                                  Diamond JACK
+                                                           Player HTC  played Heart KING 
+
+                                                           Cards played in this turn:
+                                                                  Club THREE
+                                                                  Diamond JACK
+                                                                  Heart KING
+                                                           Player Rand  played Club SIX 
+
+                                                           Cards played in this turn:
+                                                                  Club THREE
+                                                                  Diamond JACK
+                                                                  Heart KING
+                                                                  Club SIX
+
+                                                              Turn Winner:  Rand 
+                                                              Round Points:  7 
+
+                                                             ######## Turn:9  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  22
+                                                                      Hand: 
+
+                                                              ###  Club JACK  ###
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  18
+                                                                      Hand: 
+
+                                                              ###  Club TWO  ###
+                                                              ###  Club ACE  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades QUEEN  ###
+                                                              ###  Spades TWO  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  14
+                                                                      Hand: 
+
+                                                              ###  Heart SEVEN  ###
+                                                              ###  Diamond FIVE  ###
+
+
+                                                             Turn Suit:  
+                                                           Player Rand  played Club JACK 
+
+                                                           Cards played in this turn:
+                                                                  Club JACK
+                                                           Player MonteCarlo  played Club TWO 
+
+                                                           Cards played in this turn:
+                                                                  Club JACK
+                                                                  Club TWO
+                                                           Player HCC  played Spades QUEEN 
+
+                                                           Cards played in this turn:
+                                                                  Club JACK
+                                                                  Club TWO
+                                                                  Spades QUEEN
+                                                           Player HTC  played Heart SEVEN 
+
+                                                           Cards played in this turn:
+                                                                  Club JACK
+                                                                  Club TWO
+                                                                  Spades QUEEN
+                                                                  Heart SEVEN
+
+                                                              Turn Winner:  HTC 
+                                                              Round Points:  15 
+
+                                                             ######## Turn:10  ########
+
+                                                             Player Name:  Rand 
+
+                                                                      Team:  A
+                                                                      Points:  22
+                                                                      Hand: 
+
+                                                              ###  Spades FIVE  ###
+
+
+                                                             Player Name:  MonteCarlo 
+
+                                                                      Team:  A
+                                                                      Points:  18
+                                                                      Hand: 
+
+                                                              ###  Club ACE  ###
+
+
+                                                             Player Name:  HCC 
+
+                                                                      Team:  B
+                                                                      Points:  40
+                                                                      Hand: 
+
+                                                              ###  Spades TWO  ###
+
+
+                                                             Player Name:  HTC 
+
+                                                                      Team:  B
+                                                                      Points:  29
+                                                                      Hand: 
+
+                                                              ###  Diamond FIVE  ###
+
+
+                                                             Turn Suit:  
+                                                           Player HTC  played Diamond FIVE 
+
+                                                           Cards played in this turn:
+                                                                  Diamond FIVE
+                                                           Player Rand  played Spades FIVE 
+
+                                                           Cards played in this turn:
+                                                                  Diamond FIVE
+                                                                  Spades FIVE
+                                                           Player MonteCarlo  played Club ACE 
+
+                                                           Cards played in this turn:
+                                                                  Diamond FIVE
+                                                                  Spades FIVE
+                                                                  Club ACE
+                                                           Player HCC  played Spades TWO 
+
+                                                           Cards played in this turn:
+                                                                  Diamond FIVE
+                                                                  Spades FIVE
+                                                                  Club ACE
+                                                                  Spades TWO
+
+                                                              Turn Winner:  MonteCarlo 
+                                                              Round Points:  11 
+
+HERE
+
+ 
+ 
+  Main team:  Rand-MonteCarlo :
+results against  HCC-HTC : [51]
+
+ 
+ 
+  Main team:  HCC-HTC :
+results against  Rand-MonteCarlo : [69]

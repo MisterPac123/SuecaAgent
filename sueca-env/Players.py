@@ -176,18 +176,18 @@ class MCTSPlayer (Player):
         cardsPlayed = []
         deck = self.getDeck()
         valid = copy.copy(valid_cards)
-        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CURRENT DECK UNSEEN: ", len(deck))
+        #print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CURRENT DECK UNSEEN: ", len(deck))
         for _, cards in currentPlayedCards.items():
             cardsPlayed.append(cards)
             if cards in deck :
                 deck.remove(cards)
-        print("Cards Played So far",len(cardsPlayed))
+        #print("Cards Played So far",len(cardsPlayed))
         state  = MonteCarlo.State(len(cardsPlayed),cardsPlayed,trump,currentSuit)
 
         root = MonteCarlo.MCTSNode(valid,self.handLen(),deck,state,None,None)
         for i in range(0,self._nSimulation):
-            print("================  newRound  ================\n")
+            #print("================  newRound  ================\n")
             root.transverseTree()
-        print("ENDED")
-        print(root.pickBestPlay())
+        #print("ENDED")
+        #print(root.pickBestPlay())
         return root.pickBestPlay()

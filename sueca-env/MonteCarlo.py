@@ -80,13 +80,14 @@ class MCTSNode(ABC):
             if(bestQ > aux or bestQ == 0):
                 bestQ = aux
                 bestCard = childNode.getParentPlay()
-        print(bestCard.getStringCard())
+        #print(bestCard.getStringCard())
         return bestCard
 
     def getParentPlay(self):
         return self._playerPlay
 
     def transverseTree(self):
+        '''
         if(self._parentNode == None):
             print("==FATHER==")
             print("     -> Actions left", len(self._possiblePlays),"\n")
@@ -97,21 +98,22 @@ class MCTSNode(ABC):
             print("     -> Actions left", len(self._possiblePlays),"\n")
             print("     -> State: ", self._state.represent())
             print("     -> Visits: ", self._nVisits, " Reward: ", self._reward)
+        '''
         if(self.checkTerminal()):
-            print(" == REACHED TERMINAL STATE == ")
+            #print(" == REACHED TERMINAL STATE == ")
             reward = self.getPayOut(self._state)
             self.backPropagation(reward)
         elif (self._nVisits==0):
-            print("$ First Visit $","\n")
+            #print("$ First Visit $","\n")
             reward = self.rollout()
             self.backPropagation(reward)
         else:
             childIndex = ""
             if(len(self._possiblePlays)!=0):
-                print("== Expand ==")
+                #print("== Expand ==")
                 childIndex = self.expand()
             else:
-                print("== CHOOSE FROM CURRENT CHILDREN ==")
+                #print("== CHOOSE FROM CURRENT CHILDREN ==")
                 childIndex= self.pickBestChild()
             child = self.getChildren(childIndex)
             child.transverseTree()
@@ -159,7 +161,7 @@ class MCTSNode(ABC):
             cardSuit = (playedCards[i]).getSuit()
             if(winningCard == None):
                 if (currentSuit != cardSuit):
-                    print ("error in function check turn winner")
+                    #print ("error in function check turn winner")
                     currentSuit = cardSuit
                 winningCard = (playedCards[i])
                 winner = i

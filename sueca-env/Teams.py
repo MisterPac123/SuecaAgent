@@ -70,3 +70,31 @@ def createTeams():
             teams.update( { teamName : (p1 , p2) } )
     
     return teams
+
+def createShowCaseTeams():
+    #AlwaysHighestCardConvention 
+    HCC= Convention(1)
+
+    #AlwaysLowestCardConvention
+    LCC= Convention(2)
+
+    #AlwaysHighestTrumpCardConvention 
+    HTC= Convention(3)
+
+    #AlwaysLowestTrumpCardConvention
+    LTC= Convention(4)
+
+    #create Players
+    players = [RandomPlayer('Rand'), ConventionalPlayer('HCC', HCC), ConventionalPlayer('LCC', LCC),
+    ConventionalPlayer('HTC', HTC),ConventionalPlayer('LTC', LTC), MCTSPlayer("MonteCarlo", 100)]
+
+    teams = {}
+    teamName1 = players[0].getId() + "-" + players[5].getId()
+    teamName2 = players[1].getId() + "-" + players[3].getId() 
+
+    
+    teams.update( { teamName1 : (players[0] , players[5]) } )
+    teams.update( { teamName2 : (players[1] , players[3]) } )
+
+    
+    return teams

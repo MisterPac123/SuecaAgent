@@ -4,7 +4,7 @@ import random
 from Card import Card
 from Players import RandomPlayer, ConventionalPlayer, MCTSPlayer
 from RealPlayer import RealPlayer
-from Teams import createTeams
+from Teams import createShowCaseTeams, createTeams
 #import numpy as np
 #from utils import compare_results
 import copy
@@ -72,8 +72,6 @@ def startGame(players,trump):
 
 def distributeCards(players, deck):
     aux = deck.copy()
-    positions = ["U","D","L","R"]
-    i = 0
     for player in players:
         hand = random.sample(aux, 10)
         player.setHand(hand)
@@ -246,29 +244,30 @@ def startSimulation(players,trump):
     
 
     for turn in range (1, 11):
-       # print("#############################################\nCurrent turn:" + str(turn))
+        print("                                                             ######## Turn:" + str(turn)," ########\n")
+        
         nr_cards_played = 0
-        currentSuit = ""
         currentPlayedCards = {}
+        currentSuit = ""
         teamACounter = 0
         teamBCounter = 0
-        print("CARDS PLAYED SO FAR : " ,len(cardHistory), "Turn :" , turn)
+        debugPlayer(players)
 
         while nr_cards_played < 4:
+            print("                                                             Turn Suit: ",currentSuit )
+
             currentPlayer = players[playerIndex]  # current player is "NameOfAgentType"
+    
             card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards,cardHistory)
             cardHistory.append(card)
 
             #currentPlayedCards[currentPlayer.getId()] = card  # PROBLEMA FOUND 10000000%
             currentPlayedCards[id(currentPlayer)] = card  # USES THE ID OF THE OBJECT
-            '''Conventional
-            if(currentPlayer.getTeam()=="A"):
-                teamACounter+=1
-                currentPlayedCards[currentPlayer.getTeam()][currentPlayer.getId()+str(teamACounter)] = card 
-            else:
-                teamBCounter+=1    
-                currentPlayedCards[currentPlayer.getTeam()][currentPlayer.getId()+str(teamBCounter)] = card  # PROBLEMA FOUND 10000000%
-            '''
+            print("                                                           Player", currentPlayer.getId(), " played", card.getStringCard(),"\n")
+            print("                                                           Cards played in this turn:")
+            for _,c in currentPlayedCards.items():
+                print("                                                                 ",c.getStringCard())
+
             if currentSuit == "":
                 currentSuit = card.getSuit()
 
@@ -282,10 +281,10 @@ def startSimulation(players,trump):
                 winner,points = checkTurnWinner(currentPlayedCards, currentSuit,trump)
                 for p in players:
                     if id(p) == winner:
-                    #if p.getId() == winner:  #changed
                         break
                     continue
                 p.setPoints(points)
+                print("\n","                                                             Turn Winner: ", p.getId(), "\n", "                                                             Round Points: ", points, "\n")
                 playerIndex = players.index(p) # Now after each round, the playerindex is set to the winning player!
 
 
@@ -294,19 +293,21 @@ def startSimulation(players,trump):
 def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
 
     for teamNameB, teamElemsB in teams.items():
+        if(teamNameB == teamNameA):
+            continue
         teamElemsB[0].setTeam("B")
         teamElemsB[1].setTeam("B")
         counter = 0
-        players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]  # PROBLEM !!!!  ALTERING TEAM B FROM THE AUX !!!!!!!!!!!!
+        players = [ teamElemsA[0], teamElemsB[0],teamElemsA[1],teamElemsB[1] ]
         simResultsA = [0] * nSimulations #np.zeros(nSimulations)
         simResultsB = [0] * nSimulations #np.zeros(nSimulations)
         for sim in range(nSimulations):
             deck = buildDeck()
             random.shuffle(deck)
             simTrump = distributeCards(players,deck)
+            print("                                                      ########### GAME TRUMP: ", simTrump, " ###########")
             startSimulation(players, simTrump)
             counter += 1
-           # debugPlayer(players)
             teamApoints, teamBpoints = checkWinningTeam(players)
             if((teamApoints + teamBpoints) != 120):
                 raise Exception("Round points don't add up to 120")
@@ -323,7 +324,7 @@ def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
         if teamB:
             teamB.update( { teamNameA : simResultsB } )
         else:
-            mainDict.update( {teamNameB : { teamNameA : simResultsB } })  
+            mainDict.update( {teamNameB : { teamNameA : simResultsB } })
     
 
 
@@ -334,9 +335,15 @@ def printDict(dick):
             print("results against ", vsTeam, ":", result)
 
 def debugPlayer(players):
-    print("=========== Debug to see how many points each player made, thus verifying that the overall values are correct ========== ")
+    #print("=========== Debug to see how many points each player made, thus verifying that the overall values are correct ========== ")
     for p in players:
-        print(p.getId(),p.getTeam(), "Points : ", p.getPoints())
+        print("                                                             Player Name: ",p.getId(),"\n")
+        print("                                                                      Team: ",p.getTeam(),)
+        print("                                                                      Points: ", p.getPoints(),)
+        print("                                                                      Hand: \n")
+        for c in p.toStringList(p.getHand()):
+            print("                                                              ### ",c," ###")
+        print("\n")
 
 '''
 def createPlots(dict):
@@ -353,17 +360,30 @@ def createPlots(dict):
 
 def main():
     mainDict = {}
-    teams = createTeams()
-    teamsAux = copy.deepcopy(teams)
-    nSimulations = 100
-    for teamNameA, teamElemsA in teams.items():
-        teamElemsA[0].setTeam("A")
-        teamElemsA[1].setTeam("A")
-        setupMatch(mainDict, teamNameA, teamElemsA, teamsAux, nSimulations)
-        teamsAux.pop(teamNameA)
+    key = int(input("> Press 0 to normal execution.\n" + "> Press 1 for showcase execution\n"))
+    print(key)
+    if(key == 0):
+        teams = createTeams()
+        teamsAux = copy.deepcopy(teams)
+        nSimulations = 100
+        for teamNameA, teamElemsA in teams.items():
+            teamElemsA[0].setTeam("A")
+            teamElemsA[1].setTeam("A")
+            setupMatch(mainDict, teamNameA, teamElemsA, teamsAux, nSimulations)
+            teamsAux.pop(teamNameA)
 
-    printDict(mainDict)
+        printDict(mainDict)
+    else:
+        teams = createShowCaseTeams()
+        nSimulations = 1
+        for teamNameA, teamElemsA in teams.items():
+            teamElemsA[0].setTeam("A")
+            teamElemsA[1].setTeam("A")
+            setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations)
+            print("HERE")
+            break
 
+        printDict(mainDict)
     #createPlots(mainDict)
 
 
