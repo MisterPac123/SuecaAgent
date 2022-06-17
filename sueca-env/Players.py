@@ -1,10 +1,13 @@
 #from msilib.schema import SelfReg
 from abc import ABC, abstractmethod
+from ast import Raise
 from operator import truediv
 import random
 from unittest import suite
 from Card import Card
 from Enum import Convention
+import copy
+import MonteCarlo
 
 
 class Player(ABC):
@@ -14,11 +17,15 @@ class Player(ABC):
         self._partner = ''
         self._points = 0
         self._hand = []
+        self._deck = []
         self._team = ''
         self._playedCards={}
 
     def getHand(self):
         return self._hand
+    
+    def getDeck(self):
+        return self._deck
 
     def getTeam(self):
         return self._team 
@@ -38,6 +45,12 @@ class Player(ABC):
     def setHand(self, hand):
         self._hand = hand
     
+    def setDeck(self, deck):
+        aux = deck.copy()
+        for card in self.getHand():
+            aux.remove(card)
+        self._deck = aux
+    
     def getId(self):
         return self._id
 
@@ -52,6 +65,7 @@ class Player(ABC):
     
     def playCardManual(self, card):
         self._hand.remove(card)
+
 
     @abstractmethod
     def getInfo(self,currentPlayedCards,trump) -> Card:
@@ -133,3 +147,34 @@ class ConventionalPlayer(Player):
 
 
         return comparativeCard
+
+# ================================================================================================================================
+class MCTSPlayer (Player):
+    def __init__(self, id, nSimulation) -> None:
+        super(MCTSPlayer,self).__init__(id)
+        self._nSimulation = nSimulation
+    def getInfo(self,currentPlayedCards,trump):
+        return
+    
+    def trimDeck(self,cardRound):
+        for c in cardRound:
+            if c in self._deck :
+                self._deck.remove(c)
+
+    def makePlay(self,valid_cards,currentPlayedCards,currentSuit, trump):
+        cardsPlayed = []
+        deck = self.getDeck()
+        for _, cards in currentPlayedCards.items():
+            cardsPlayed.append(cards)
+            deck.remove(cards)
+     #   print("Cards Plyed So far",len(cardsPlayed))
+        state  = MonteCarlo.State(len(cardsPlayed),cardsPlayed,trump,currentSuit)
+        possblePlays = copy.copy(self.getHand())
+        #print(possblePlays)
+        root = MonteCarlo.MCTSNode(possblePlays,deck,state,None,None)
+        for i in range(0,self._nSimulation):
+      #      print("================  newRound  ================\n")
+            root.transverseTree()
+      #  print("ENDED")
+       # print(root.pickBestPlay())
+        return root.pickBestPlay()

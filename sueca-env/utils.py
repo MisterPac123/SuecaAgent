@@ -3,7 +3,7 @@ from typing import Optional, Sequence
 
 import numpy as np
 import matplotlib.pyplot as plt
-
+from matplotlib.ticker import MaxNLocator
 
 def z_table(confidence):
     """Hand-coded Z-Table
@@ -99,12 +99,13 @@ def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, conf
         errors = None
     fig, ax = plt.subplots()
     x_pos = np.arange(len(names))
-    ax.bar(x_pos, means, yerr=errors, align='center', alpha=0.5, color=colors if colors is not None else "gray", ecolor='black', capsize=10)
+    ax.bar(x_pos, means, yerr=errors, align='center', alpha=0.5, color=colors if colors is not None else "gray", ecolor='black', capsize=10, width = 0.6)
     ax.set_ylabel(y_label)
     ax.set_xlabel(x_label)
     ax.set_xticks(x_pos)
     ax.set_xticklabels(names)
     ax.set_title(title)
+    ax.yaxis.set_ticks([0,20,40,60,80,100])   
     ax.yaxis.grid(True)
 
     if flag:
@@ -119,7 +120,7 @@ def plot_confidence_bar(names, means, std_devs, N, title, x_label, y_label, conf
     if filename is not None:
         dpi = 100
         fig = plt.gcf()
-        fig.set_size_inches((1500/dpi),(600/dpi))
+        fig.set_size_inches((1800/dpi),(600/dpi))
         fig.savefig(filename, dpi=dpi)
     if show:
         plt.show()
@@ -157,7 +158,7 @@ def createAvgScorePlots(results, confidence=0.95, title="Agents Comparison", met
         std_devs=stds,
         N=N,
         title=title,
-        x_label="", y_label=f"Avg. {metric}",
+        x_label="", y_label= metric,
         confidence=confidence, show=show, filename = filename, colors=colors
     )
 
@@ -166,7 +167,7 @@ def calculateWinPrct(values):
     prct =  ((values > 60).sum()) / (len(values)) 
     return prct * 100
 
-def createWinPerctPlots(results, confidence=0.95, title="Agents Comparison", metric="Win %", colors=None, filename = None, show=True):
+def createWinPerctPlots(key,results, confidence=0.95, title="Agents Comparison", metric="Win %", colors=None, filename = None, show=True):
 
     """Displays a bar plot comparing the performance of different agents/teams.
 
@@ -188,6 +189,8 @@ def createWinPerctPlots(results, confidence=0.95, title="Agents Comparison", met
 
     names = list(results.keys())
     winPrct = [calculateWinPrct(result) for result in results.values()]
+    f = open("winPrct.txt", "a")
+    f.write(key + " : " + str(winPrct) + "\n")
     stds = [result.std() for result in results.values()]
     N = [result.size for result in results.values()]
 

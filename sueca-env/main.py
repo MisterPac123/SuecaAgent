@@ -2,11 +2,10 @@ from email.policy import default
 import os
 import random
 from Card import Card
-from Players import RandomPlayer, ConventionalPlayer
+from Players import RandomPlayer, ConventionalPlayer, MCTSPlayer
 from RealPlayer import RealPlayer
 from Teams import createTeams
 import numpy as np
-#from utils import compare_results
 import copy
 
 from utils import createAvgScorePlots, createWinPerctPlots
@@ -71,11 +70,13 @@ def startGame(players,trump):
 
 
 def distributeCards(players, deck):
+    aux = deck.copy()
     for player in players:
-        hand = random.sample(deck, 10)
+        hand = random.sample(aux, 10)
         player.setHand(hand)
+        player.setDeck(deck)
         for card in hand:
-            deck.remove(card)
+            aux.remove(card)
     return card.getSuit()    
 
 def buildDeck():
@@ -184,7 +185,8 @@ def getValidPlay(currentplayer, currentSuit, currentPlayedCards, trump) :
     elif (isinstance(currentplayer, ConventionalPlayer)):
         convention = currentplayer.getSocialConvetion()
         return currentplayer.makePlay(valid_cards, convention, trump)
-
+    elif (isinstance(currentplayer, MCTSPlayer)):
+        return currentplayer.makePlay(valid_cards,currentPlayedCards,currentSuit, trump)
 
 
 def checkTurnWinner(currentPlayedCards, currentSuit,trump):
@@ -236,6 +238,7 @@ def startSimulation(players,trump):
     initialPlayer = random.choice(players)
     playerIndex = players.index(initialPlayer)
     nr_cards_played = 0
+    
 
     for turn in range (1, 11):
        # print("#############################################\nCurrent turn:" + str(turn))
@@ -251,7 +254,7 @@ def startSimulation(players,trump):
             card = selfPlayerTurn(currentPlayer, currentSuit, trump, currentPlayedCards)
             #currentPlayedCards[currentPlayer.getId()] = card  # PROBLEMA FOUND 10000000%
             currentPlayedCards[id(currentPlayer)] = card  # USES THE ID OF THE OBJECT
-            '''
+            '''Conventional
             if(currentPlayer.getTeam()=="A"):
                 teamACounter+=1
                 currentPlayedCards[currentPlayer.getTeam()][currentPlayer.getId()+str(teamACounter)] = card 
@@ -286,7 +289,7 @@ def setupMatch(mainDict, teamNameA, teamElemsA, teams, nSimulations):
         teamElemsB[0].setTeam("B")
         teamElemsB[1].setTeam("B")
         counter = 0
-        players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]  # PROBLEM !!!!  ALTERING TEAM B FROM THE AUX !!!!!!!!!!!!
+        players = [ teamElemsA[0], teamElemsA[1], teamElemsB[0], teamElemsB[1] ]
         simResultsA = np.zeros(nSimulations)
         simResultsB = np.zeros(nSimulations)
         for sim in range(nSimulations):
@@ -343,7 +346,7 @@ def evaluations(dict):
         "violet", "aqua", "olive", "peru", "salmon",
         "silver", "skyblue","teal", "tomato", "brown"],filename=filenameAvgScore, show = False)
 
-        createWinPerctPlots(subdict,
+        createWinPerctPlots(key, subdict,
         title = "Team " + key + " against other teams",
         colors=["orange", "red", "blue", "green", "yellow",
         "violet", "aqua", "olive", "peru", "salmon",
@@ -354,14 +357,16 @@ def main():
     mainDict = {}
     teams = createTeams()
     teamsAux = copy.deepcopy(teams)
-    nSimulations = 10
+    nSimulations = 1000
     for teamNameA, teamElemsA in teams.items():
         teamElemsA[0].setTeam("A")
         teamElemsA[1].setTeam("A")
         setupMatch(mainDict, teamNameA, teamElemsA, teamsAux, nSimulations)
         teamsAux.pop(teamNameA)
 
-   # printDict(mainDict)
+    #printDict(mainDict)
+    f = open("output.txt", "w")
+    f.write(str(mainDict))
 
     evaluations(mainDict)
 

@@ -1,5 +1,5 @@
 from Enum import Convention
-from Players import RandomPlayer, ConventionalPlayer
+from Players import RandomPlayer, ConventionalPlayer, MCTSPlayer
 import copy
 
 def oldInitPlayers ():
@@ -57,8 +57,8 @@ def createTeams():
     LTC= Convention(4)
 
     #create Players
-    players = [RandomPlayer('Rand'), ConventionalPlayer('HCC', HCC), ConventionalPlayer('LCC', LCC),
-    ConventionalPlayer('HTC', HTC),ConventionalPlayer('LTC', LTC)]
+    players = [RandomPlayer('Rnd'), ConventionalPlayer('HCC', HCC), ConventionalPlayer('LCC', LCC),
+    ConventionalPlayer('HTC', HTC),ConventionalPlayer('LTC', LTC), MCTSPlayer("MC", 1000)]
 
     #create all possible unique teams of 2 from players, adds them to a dictionary with the key being their team name: 15 teams
     teams = {}
