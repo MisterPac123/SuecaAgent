@@ -17,15 +17,15 @@ class Card:
     def getCardPoints(self):
         cardValue = self.value
         match cardValue:
-            case 'Q':
+            case 'QUEEN':
                 return 2
-            case 'J':
+            case 'JACK':
                 return 3
-            case 'K':
+            case 'KING':
                 return 4
-            case 7:
+            case 'SEVEN':
                 return 10
-            case 'A':
+            case 'ACE':
                 return 11
             case default:
                 return 0
